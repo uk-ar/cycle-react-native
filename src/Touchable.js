@@ -1,20 +1,20 @@
 'use strict';
 
-import React from 'react-native';
+import React, { PropTypes } from 'react';
 import {findHandler} from './driver';
+import ReactNative from 'react-native';
 const {
   View,
-  PropTypes
-} = React;
+} = ReactNative;
 
-const ACTION_TYPES = {
+const PRESS_ACTION_TYPES = {
   onPress: 'press',
   onPressIn: 'pressIn',
   onPressOut: 'pressOut',
   onLongPress: 'longPress'
 };
 
-function createTouchableClass(className) {
+function createCycleComponent(className, actionTypes) {
   return React.createClass({
     displayName: 'Cycle' + className,
     propTypes: {
@@ -25,12 +25,12 @@ function createTouchableClass(className) {
       this._touchable.setNativeProps(props);
     },
     render() {
-      const TouchableClass = React[className];
+      const TouchableClass = ReactNative[className];
       const {selector, ...props} = this.props;
 
       // find all defined touch handlers
-      const handlers = Object.keys(ACTION_TYPES)
-        .map(name => [name, findHandler(ACTION_TYPES[name], selector)])
+      const handlers = Object.keys(actionTypes)
+        .map(name => [name, findHandler(actionTypes[name], selector)])
         .filter(([_, handler]) => !!handler)
         .reduce((memo, [name, handler]) => {
           // pass payload to event handler if defined
@@ -54,8 +54,12 @@ function createTouchableClass(className) {
 }
 
 export default {
-  TouchableOpacity: createTouchableClass('TouchableOpacity'),
-  TouchableWithoutFeedback: createTouchableClass('TouchableWithoutFeedback'),
-  TouchableHighlight: createTouchableClass('TouchableHighlight'),
-  TouchableNativeFeedback: createTouchableClass('TouchableNativeFeedback')
+  TouchableOpacity: createCycleComponent('TouchableOpacity',
+                                         PRESS_ACTION_TYPES),
+  TouchableWithoutFeedback: createCycleComponent('TouchableWithoutFeedback',
+                                                 PRESS_ACTION_TYPES),
+  TouchableHighlight: createCycleComponent('TouchableHighlight',
+                                           PRESS_ACTION_TYPES),
+  TouchableNativeFeedback: createCycleComponent('TouchableNativeFeedback',
+                                                   PRESS_ACTION_TYPES),
 };
