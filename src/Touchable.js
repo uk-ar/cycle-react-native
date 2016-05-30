@@ -41,12 +41,11 @@ function createCycleComponent(className, actionTypes) {
 
       return (
         <TouchableClass
-          ref={view => this._touchable = view}
-          {...handlers}
+            ref={view => this._touchable = view}
+            {...props}
+            {...handlers}
         >
-          <View {...props}>
             {this.props.children}
-          </View>
         </TouchableClass>
       );
     }
@@ -61,5 +60,8 @@ export default {
   TouchableHighlight: createCycleComponent('TouchableHighlight',
                                            PRESS_ACTION_TYPES),
   TouchableNativeFeedback: createCycleComponent('TouchableNativeFeedback',
-                                                   PRESS_ACTION_TYPES),
+                                                PRESS_ACTION_TYPES),
+  createCycleComponent,
+  Text: createCycleComponent('Text',
+                             PRESS_ACTION_TYPES),
 };
