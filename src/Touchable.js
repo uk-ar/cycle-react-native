@@ -5,6 +5,12 @@ import {findHandler} from './driver';
 import ReactNative from 'react-native';
 const {
   View,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  Text,
+  TextInput,
 } = ReactNative;
 
 const PRESS_ACTION_TYPES = {
@@ -25,7 +31,7 @@ function createCycleComponent(className, actionTypes) {
       this._touchable.setNativeProps(props);
     },
     render() {
-      const TouchableClass = ReactNative[className];
+      const TouchableClass = className;
       const {selector, ...props} = this.props;
 
       // find all defined touch handlers
@@ -53,15 +59,17 @@ function createCycleComponent(className, actionTypes) {
 }
 
 export default {
-  TouchableOpacity: createCycleComponent('TouchableOpacity',
+  createCycleComponent: createCycleComponent,
+  PRESS_ACTION_TYPES: PRESS_ACTION_TYPES,
+  TouchableOpacity: createCycleComponent(TouchableOpacity,
                                          PRESS_ACTION_TYPES),
-  TouchableWithoutFeedback: createCycleComponent('TouchableWithoutFeedback',
+  TouchableWithoutFeedback: createCycleComponent(TouchableWithoutFeedback,
                                                  PRESS_ACTION_TYPES),
-  TouchableHighlight: createCycleComponent('TouchableHighlight',
+  TouchableHighlight: createCycleComponent(TouchableHighlight,
                                            PRESS_ACTION_TYPES),
-  TouchableNativeFeedback: createCycleComponent('TouchableNativeFeedback',
+  TouchableNativeFeedback: createCycleComponent(TouchableNativeFeedback,
                                                 PRESS_ACTION_TYPES),
-  createCycleComponent,
-  Text: createCycleComponent('Text',
+  Text: createCycleComponent(Text,
                              PRESS_ACTION_TYPES),
+  TextInput: createCycleComponent(TextInput),
 };
