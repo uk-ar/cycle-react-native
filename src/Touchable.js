@@ -33,6 +33,13 @@ function createCycleComponent(className, actionTypes) {
     render() {
       const TouchableClass = className;
       const {selector, ...props} = this.props;
+      if(!actionTypes && TouchableClass.propTypes){
+        actionTypes={}
+        Object.keys(TouchableClass.propTypes)
+              .filter((key)=>key.startsWith("on"))
+              .forEach((key)=>actionTypes[key]=
+                `${key.charAt(2).toLowerCase()}${key.slice(3)}`);
+      }
 
       // find all defined touch handlers
       const handlers = Object.keys(actionTypes)
