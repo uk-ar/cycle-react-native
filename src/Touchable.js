@@ -47,7 +47,8 @@ function createCycleComponent(className, actionTypes) {
         .filter(([_, handler]) => !!handler)
         .reduce((memo, [name, handler]) => {
           // pass payload to event handler if defined
-          memo[name] = () => handler(this.props.payload || null);
+          memo[name] = (...args) => handler(this.props.payload === undefined ?
+                                            args : this.props.payload);
           return memo;
         }, {});
 
