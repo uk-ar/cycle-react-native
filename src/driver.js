@@ -44,10 +44,12 @@ function isChildReactElement(child) {
 
 function makeReactNativeDriver(appKey) {
   return function reactNativeDriver(vtree$) {
+    const sink$ = vtree$.shareReplay();
+    sink$.subscribe()
     function componentFactory() {
       return React.createClass({
         componentWillMount() {
-          vtree$.subscribe(newVTree => {
+          sink$.subscribe(newVTree => {
             this.setState({vtree: newVTree})
           })
         },
