@@ -64,10 +64,14 @@ function makeReactNativeDriver(appKey) {
 
     let response = {
       select(selector) {
+        let ret = registerHandler(selector, "my");
         return {
           observable: Rx.Observable.empty(),
           events: function events(evType) {
             return registerHandler(selector, evType);
+          },
+          my: function self() {
+            return ret;
           },
         }
       },

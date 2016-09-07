@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { PropTypes } from 'react';
-import {findHandler} from './driver';
+import { findHandler } from './driver';
 import ReactNative from 'react-native';
 const {
   View,
@@ -52,10 +52,12 @@ function createCycleComponent(className, actionTypes) {
           return memo;
         }, {});
 
-
       return (
         <TouchableClass
-            ref={view => this._touchable = view}
+          ref={view => {
+              this._touchable = view;
+              findHandler("my", selector)(view)
+            }}
             {...props}
             {...handlers}
         >
