@@ -12,10 +12,10 @@ let handlers = {
 
 function createHandler() {
   const handler = new Rx.Subject();
-  handler.send = function sendIntoSubject(...args) {
-    handler.onNext(...args)
+  handler.send = function sendIntoSubject(args) {
+    handler.onNext(args)//onNext takes one argument
   }
-  return handler;
+  return handler;//.map((args)=> { return(...args) });
 }
 
 export function getBackHandler() {

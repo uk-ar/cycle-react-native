@@ -49,7 +49,7 @@ function createCycleComponent(className, actionTypes) {
           // pass payload to event handler if defined
           memo[name] = (...args) => {
             return this.props.payload === undefined ?
-                   handler(...args) :
+                   handler(args) :
                    handler(this.props.payload)
           }
           return memo;
